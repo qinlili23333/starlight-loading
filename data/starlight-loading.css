@@ -69,6 +69,10 @@
   bottom: 92px;
 }
 
+.starlight-panel.hide {
+  display: none;
+}
+
 .starlight-ratio {
   bottom: 114px;
   left: 355px;

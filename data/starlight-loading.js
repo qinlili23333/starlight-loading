@@ -1,5 +1,5 @@
 const starlightLoading = {
-    init: () => {
+    init: (showPanelNow) => {
         const wrapper = document.createElement('div');
         const back = document.createElement('div');
         const banner = document.createElement('div');
@@ -16,7 +16,7 @@ const starlightLoading = {
         wrapper.className = 'starlight-loading';
         back.className = 'starlight-back';
         banner.className = 'starlight-banner';
-        panel.className = 'starlight-panel';
+        panel.className = 'starlight-panel hide';
         ratio.className = 'starlight-ratio';
 
         // --------------------------------------------------
@@ -57,14 +57,27 @@ const starlightLoading = {
         wrapper.appendChild(back);
         wrapper.appendChild(banner);
         wrapper.appendChild(panel);
-        wrapper.appendChild(ratio);
+        panel.appendChild(ratio);
         document.body.appendChild(wrapper);
         starlightLoading.setProgress(0);
+        if (showPanelNow) {
+            starlightLoading.showPanel();
+        }
     },
 
     hide: () => {
         const wrapper = document.getElementsByClassName("starlight-loading")[0];
         wrapper.classList.add("hide");
+    },
+
+    showPanel: () => {
+        const panel = document.getElementsByClassName("starlight-panel")[0];
+        panel.classList.remove("hide");
+    },
+
+    hidePanel: () => {
+        const panel = document.getElementsByClassName("starlight-panel")[0];
+        panel.classList.add("hide");
     },
 
     setProgress: progressRatio => {
