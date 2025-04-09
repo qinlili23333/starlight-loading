@@ -48,10 +48,6 @@ const starlightLoading = {
         banner.appendChild(heart);
 
         // --------------------------------------------------
-        // Setup starlight-ratio
-
-
-        // --------------------------------------------------
         // Integrate
 
         wrapper.appendChild(back);
@@ -65,8 +61,10 @@ const starlightLoading = {
         }
     },
 
-    hide: () => {
+    hide: async () => {
         const wrapper = document.getElementsByClassName("starlight-loading")[0];
+        wrapper.style.opacity = 0;
+        await new Promise(resolve => setTimeout(resolve, 250));
         wrapper.classList.add("hide");
     },
 

@@ -12,7 +12,7 @@
       starlightLoading.showPanel();
       for (let i = 0; i < 11; i++) {
         starlightLoading.setProgress(i * 10);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 150));
       }
       starlightLoading.hidePanel();
       await new Promise(resolve => setTimeout(resolve, 1000));
