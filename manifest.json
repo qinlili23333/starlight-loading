@@ -11,9 +11,16 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://*/*"],
-            "js" : ["data/pace-option.js", "data/pace.min.js", "data/starlight-loading.js"],
-            "css": ["data/pace.css", "data/mplus-1p-bold-sub-woff.css", "data/starlight-loading.css"],
+            "matches": [
+                "*://*/*"
+            ],
+            "js": [
+                "data/starlight-loading.js"
+            ],
+            "css": [
+                "data/mplus-1p-bold-sub-woff.css",
+                "data/starlight-loading.css"
+            ],
             "run_at": "document_start"
         }
     ]

@@ -1,74 +1,75 @@
-// Define as a global param in order to make it disconnectable.
-var observer = new MutationObserver(function (mutation){
-    // When pace-progress's "data-progress-text" is mutated, the following code runs.
-    var progressRatio = mutation[0].target.getAttribute("data-progress-text");
-    document.getElementsByClassName("starlight-ratio")[0].textContent = progressRatio;
-});
+const starlightLoading = {
+    init: () => {
+        const wrapper = document.createElement('div');
+        const back = document.createElement('div');
+        const banner = document.createElement('div');
+        const panel = document.createElement('div');
+        const ratio = document.createElement('div');
 
-Pace.on('start', function() {
-    var wrapper = document.createElement('div');
-    var back    = document.createElement('div');
-    var banner  = document.createElement('div');
-    var panel   = document.createElement('div');
-    var ratio   = document.createElement('div');
+        const pace = document.createElement('div');
+        pace.className = 'starlight-loading-pace';
+        const progress = document.createElement('div');
+        progress.className = 'starlight-loading-pace-progress';
+        pace.appendChild(progress);
 
-    wrapper.className = 'starlight-loading';
-    back.className    = 'starlight-back';
-    banner.className  = 'starlight-banner';
-    panel.className   = 'starlight-panel';
-    ratio.className   = 'starlight-ratio';
 
-    // --------------------------------------------------
-    // Setup starlight-panel
+        wrapper.className = 'starlight-loading';
+        back.className = 'starlight-back';
+        banner.className = 'starlight-banner';
+        panel.className = 'starlight-panel';
+        ratio.className = 'starlight-ratio';
 
-    var message_up = document.createElement('p');
-    var message_dn = document.createElement('p');
-    message_up.className = 'message-up';
-    message_dn.className = 'message-down';
-    message_up.appendChild(document.createTextNode('データダウンロード中'));
-    message_dn.appendChild(document.createTextNode('※通信環境の良い所で実行してください'));
-    panel.appendChild(message_up);
-    panel.appendChild(message_dn);
+        // --------------------------------------------------
+        // Setup starlight-panel
 
-    var progress_border = document.createElement('div');
-    progress_border.className = 'progress-border';
-    panel.appendChild(progress_border);
+        const message_up = document.createElement('p');
+        const message_dn = document.createElement('p');
+        message_up.className = 'message-up';
+        message_dn.className = 'message-down';
+        message_up.appendChild(document.createTextNode('データダウンロード中'));
+        message_dn.appendChild(document.createTextNode('※通信環境の良い所で実行してください'));
+        panel.appendChild(message_up);
+        panel.appendChild(message_dn);
 
-    // --------------------------------------------------
-    // Setup starlight-banner
+        const progress_border = document.createElement('div');
+        progress_border.className = 'progress-border';
+        progress_border.appendChild(pace);
+        panel.appendChild(progress_border);
 
-    var nowLoading = document.createElement('p');
-    nowLoading.appendChild(document.createTextNode('Now Loading...'));
-    banner.appendChild(nowLoading);
+        // --------------------------------------------------
+        // Setup starlight-banner
 
-    var heart = document.createElement('div');
-    heart.className = 'heart';
-    banner.appendChild(heart);
+        const nowLoading = document.createElement('p');
+        nowLoading.appendChild(document.createTextNode('Now Loading...'));
+        banner.appendChild(nowLoading);
 
-    // --------------------------------------------------
-    // Setup starlight-ratio
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        banner.appendChild(heart);
 
-    // check if pace-progress's "data-progress-text" is mutated by pace.js
-    var progressElem = document.getElementsByClassName("pace-progress")[0];
-    observer.observe(progressElem, {attributes: true, attributeFilter: ["data-progress-text"]});
+        // --------------------------------------------------
+        // Setup starlight-ratio
 
-    // --------------------------------------------------
-    // Integrate
 
-    wrapper.appendChild(back);
-    wrapper.appendChild(banner);
-    wrapper.appendChild(panel);
-    wrapper.appendChild(ratio);
-    document.body.appendChild(wrapper);
-});
+        // --------------------------------------------------
+        // Integrate
 
-Pace.on('done', function() {
-    var wrapper = document.getElementsByClassName("starlight-loading")[0];
-    wrapper.classList.add("hide");
-    observer.disconnect();
-});
+        wrapper.appendChild(back);
+        wrapper.appendChild(banner);
+        wrapper.appendChild(panel);
+        wrapper.appendChild(ratio);
+        document.body.appendChild(wrapper);
+        starlightLoading.setProgress(0);
+    },
 
-// support no smartphones
-if(!navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/)){
-    Pace.start();
+    hide: () => {
+        const wrapper = document.getElementsByClassName("starlight-loading")[0];
+        wrapper.classList.add("hide");
+    },
+
+    setProgress: progressRatio => {
+        document.getElementsByClassName("starlight-ratio")[0].textContent = progressRatio + "%";
+        const progress = document.getElementsByClassName("starlight-loading-pace-progress")[0];
+        progress.style.right = (100 - progressRatio) + "%";
+    }
 }

@@ -3,4 +3,17 @@
   <link href="starlight-loading.min.css" rel="stylesheet" />
   <script src="starlight-loading.min.js"></script>
 </head>
-<body></body>
+
+<body>
+  <script>
+    (async () => {
+      starlightLoading.init();
+      for (let i = 0; i < 11; i++) {
+        starlightLoading.setProgress(i * 10);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      starlightLoading.hide();
+    })();
+
+  </script>
+</body>
